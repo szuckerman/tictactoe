@@ -2,7 +2,7 @@
 class Player:
 	def __init__(self, piece):
 		self.piece = piece
-		self.phrase = "\nIt's the {0} player's turn.  Please select coordinates to place an {0}.".format(self.piece)
+		self.phrase = "\nIt's the {0} player's turn.".format(self.piece)
 
 
 class Board:
@@ -19,7 +19,7 @@ class Board:
 	def __call__(self):
 		return self._board_array
 	def printBoard(self):
-		print('   1 | 2 | 3')
+		print('\n   1 | 2 | 3')
 		count = 0
 		for rows in self._board_array:
 			count += 1
@@ -37,29 +37,37 @@ def checkWinningBoard():
 	for piece in {'X', 'O'}:
 		if board[0][0] == board[0][1] == board[0][2] == piece:
 			print("%s Wins!\n" % piece)
+			board.printBoard()
 			return True
 		elif board[1][0] == board[1][1] == board[1][2] == piece:
 			print("%s Wins!\n" % piece)
+			board.printBoard()
 			return True
 		elif board[2][0] == board[2][1] == board[2][2] == piece:
 			print("%s Wins!\n" % piece)
+			board.printBoard()
 			return True
 		# Cols
 		elif board[0][0] == board[1][0] == board[2][0] == piece:
 			print("%s Wins!\n" % piece)
+			board.printBoard()
 			return True
 		elif board[0][1] == board[1][1] == board[2][1] == piece:
 			print("%s Wins!\n" % piece)
+			board.printBoard()
 			return True
 		elif board[0][2] == board[1][2] == board[2][2] == piece:
 			print("%s Wins!\n" % piece)
+			board.printBoard()
 			return True
 		# Diagonal
 		elif board[0][0] == board[1][1] == board[2][2] == piece:
 			print("%s Wins!\n" % piece)
+			board.printBoard()
 			return True
 		elif board[2][0] == board[1][1] == board[0][2] == piece:
 			print("%s Wins!\n" % piece)
+			board.printBoard()
 			return True
 		else:
 			return False
@@ -73,10 +81,10 @@ print('Welcome to tictactoe!')
 while True:
 	board.printBoard()
 	print(board.current_player.phrase)
-	move = input()
-	x, y = move.split(',')
-	x, y = int(x), int(y)
-	board[x-1][y-1] = board.current_player.piece
+	row_coords = input('Enter row coordinates to place an %s > ' % board.current_player.piece)
+	col_coords = input('Enter column coordinates to place an %s > ' % board.current_player.piece)
+	row_coords, col_coords = int(row_coords), int(col_coords)
+	board[row_coords-1][col_coords-1] = board.current_player.piece
 	board._total_moves += 1
 	if checkWinningBoard():
 		break
