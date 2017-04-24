@@ -73,8 +73,11 @@ def checkWinningBoard():
 			return False
 
 
-# def checkIfSpotTaken(x, y):
-# 	if board[x-1, y-1] != ' ':
+def checkIfSpotTaken(x, y):
+	if board[x-1][y-1] == ' ':
+		return False
+	else:
+		return True
 
 
 print('Welcome to tictactoe!')
@@ -84,9 +87,14 @@ while True:
 	row_coords = input('Enter row coordinates to place an %s > ' % board.current_player.piece)
 	col_coords = input('Enter column coordinates to place an %s > ' % board.current_player.piece)
 	row_coords, col_coords = int(row_coords), int(col_coords)
-	board[row_coords-1][col_coords-1] = board.current_player.piece
-	board._total_moves += 1
-	if checkWinningBoard():
-		break
-	board.switchCurrentPlayer()
+	if not checkIfSpotTaken(row_coords, col_coords):
+		board[row_coords-1][col_coords-1] = board.current_player.piece
+		board._total_moves += 1
+		if checkWinningBoard():
+			break
+		board.switchCurrentPlayer()
+	else:
+		print('\n-------------------------------------')
+		print("Space is occupied.  Please try again.")
+		print('-------------------------------------\n')
 
