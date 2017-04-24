@@ -73,7 +73,18 @@ def checkWinningBoard():
 			return False
 
 
-def checkIfSpotTaken(x, y):
+def checkDrawGame():
+	empty_cells_list = [element for row in board for element in row]
+	if empty_cells_list.count(' ') == 0:
+		print('\n---------------')
+		print('Game is a draw!')
+		print('---------------\n')
+		return True
+	else:
+		return False
+
+
+def spotIsTaken(x, y):
 	if board[x-1][y-1] == ' ':
 		return False
 	else:
@@ -87,14 +98,19 @@ while True:
 	row_coords = input('Enter row coordinates to place an %s > ' % board.current_player.piece)
 	col_coords = input('Enter column coordinates to place an %s > ' % board.current_player.piece)
 	row_coords, col_coords = int(row_coords), int(col_coords)
-	if not checkIfSpotTaken(row_coords, col_coords):
+	if not spotIsTaken(row_coords, col_coords):
 		board[row_coords-1][col_coords-1] = board.current_player.piece
 		board._total_moves += 1
 		if checkWinningBoard():
 			break
 		board.switchCurrentPlayer()
+		if checkDrawGame():
+			break
 	else:
 		print('\n-------------------------------------')
 		print("Space is occupied.  Please try again.")
 		print('-------------------------------------\n')
+
+
+
 
